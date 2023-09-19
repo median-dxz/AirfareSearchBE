@@ -1,0 +1,3 @@
+services:
+  rpc:
+    build: rpc
