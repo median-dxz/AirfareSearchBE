@@ -18,9 +18,6 @@
 			"version": "os-provided"
 		},
 		"ghcr.io/warrenbuckley/codespace-features/sqlite:1": {},
-		"ghcr.io/balazs23/devcontainers-features/bazel:1": {
-			"bazelisk": "latest"
-		},
 		"ghcr.io/devcontainers/features/node:1": {
 			"nodeGypDependencies": true,
 			"version": "latest",

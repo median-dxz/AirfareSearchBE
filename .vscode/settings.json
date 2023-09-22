@@ -1,0 +1,12 @@
+{
+    "editor.suggest.showWords": false,
+    "cmake.configureSettings": {
+        "CMAKE_TOOLCHAIN_FILE": "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    "cmake.sourceDirectory": [
+        "/workspaces/airfare-search-service/rpc"
+    ],
+    "files.associations": {
+        "*.inc": "cpp"
+    }
+}

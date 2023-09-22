@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package AirfareSearch;
+
+service FlightsSearchService {
+  rpc search(SearchRequest) returns (SearchResponse) {}
+}
+
+message City {
+  string name = 1;
+  string code = 2;
+}
+
+enum Cabin {
+  F = 0;
+  C = 1;
+  Y = 2;
+}
+
+message Flight {
+  string carrier = 1;
+  string flightNo = 2;
+  City departure = 3;
+  City arrival = 4;
+  string departureDatetime = 5;
+  string arrivalDatetime = 6;
+  repeated Cabin cabins = 7;
+}
+
+message FlightResult {
+  repeated Flight flights = 1;
+  int32 price = 2;
+  repeated string agencies = 3;
+}
+
+message SearchResponse { repeated FlightResult data = 1; }
+
+message SearchRequest {
+  int32 people = 1;
+  int32 maxResults = 2;
+  repeated string agencies = 3;
+  repeated SearchRoute routes = 4;
+}
+
+message SearchRoute {
+  int32 id = 1;
+  City departure = 2;
+  City arrival = 3;
+  string departureDate = 4;
+}
