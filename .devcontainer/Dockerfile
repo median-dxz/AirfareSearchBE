@@ -17,6 +17,6 @@ RUN if [ "${REINSTALL_CMAKE_VERSION_FROM_SOURCE}" != "none" ]; then \
 RUN su vscode -c "${VCPKG_ROOT}/vcpkg install grpc"
 
 # [Optional] Uncomment this section to install additional packages.
-RUN apt-get update
-    # && export DEBIAN_FRONTEND=noninteractive \
-    # && apt-get -y install --no-install-recommends build-essential autoconf libtool pkg-config
+RUN apt-get update \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends build-essential gdb

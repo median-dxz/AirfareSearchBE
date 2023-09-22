@@ -100,6 +100,10 @@ class ServerImpl final {
 
                 AirfareSearch::City c1;
                 AirfareSearch::City c2;
+                AirfareSearch::City c3;
+                AirfareSearch::City c4;
+                AirfareSearch::City c5;
+                AirfareSearch::City c6;
 
                 c1.set_code("AAA");
                 c1.set_name("中国");
@@ -107,18 +111,18 @@ class ServerImpl final {
                 c2.set_code("AAC");
                 c2.set_code("BBB");
 
-                f1->set_allocated_arrival(&c1);
+                f1->set_allocated_arrival(new AirfareSearch::City(c1));
                 f1->set_arrivaldatetime("111122334455");
-                f1->set_allocated_departure(&c2);
+                f1->set_allocated_departure(new AirfareSearch::City(c2));
                 f1->set_departuredatetime("111122334455");
                 f1->set_carrier("AA");
                 f1->set_flightno("24154");
                 f1->add_cabins(AirfareSearch::Cabin::F);
                 f1->add_cabins(AirfareSearch::Cabin::Y);
 
-                f2->set_allocated_arrival(&c1);
+                f2->set_allocated_arrival(new AirfareSearch::City(c1));
                 f2->set_arrivaldatetime("111122334455");
-                f2->set_allocated_departure(&c2);
+                f2->set_allocated_departure(new AirfareSearch::City(c2));
                 f2->set_departuredatetime("111122334455");
                 f2->set_carrier("AA");
                 f2->set_flightno("24154");
@@ -129,9 +133,9 @@ class ServerImpl final {
                 r2->add_agencies("CAN001");
 
                 auto f3 = r2->add_flights();
-                f3->set_allocated_arrival(&c1);
+                f3->set_allocated_arrival(new AirfareSearch::City(c1));
                 f3->set_arrivaldatetime("111122334455");
-                f3->set_allocated_departure(&c2);
+                f3->set_allocated_departure(new AirfareSearch::City(c2));
                 f3->set_departuredatetime("111122334455");
                 f3->set_carrier("AA");
                 f3->set_flightno("24154");

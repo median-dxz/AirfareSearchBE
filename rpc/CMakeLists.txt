@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.22)
 project(rpc CXX)
 
 find_package(Protobuf CONFIG REQUIRED)
