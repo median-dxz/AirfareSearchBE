@@ -1,0 +1,966 @@
+[
+    {
+        "name": "阿勒泰",
+        "code": "AAT"
+    },
+    {
+        "name": "阿克苏",
+        "code": "AKU"
+    },
+    {
+        "name": "鞍山",
+        "code": "AOG"
+    },
+    {
+        "name": "安庆",
+        "code": "AQG"
+    },
+    {
+        "name": "安顺",
+        "code": "AVA"
+    },
+    {
+        "name": "阿拉善左旗",
+        "code": "AXF"
+    },
+    {
+        "name": "阿里",
+        "code": "NGQ"
+    },
+    {
+        "name": "阿拉善右旗",
+        "code": "RHT"
+    },
+    {
+        "name": "阿尔山",
+        "code": "YIE"
+    },
+    {
+        "name": "巴中",
+        "code": "BZX"
+    },
+    {
+        "name": "百色",
+        "code": "AEB"
+    },
+    {
+        "name": "包头",
+        "code": "BAV"
+    },
+    {
+        "name": "毕节",
+        "code": "BFJ"
+    },
+    {
+        "name": "北海",
+        "code": "BHY"
+    },
+    {
+        "name": "北京",
+        "code": "BJS"
+    },
+    {
+        "name": "北京(大兴国际机场)",
+        "code": "PKX"
+    },
+    {
+        "name": "北京(首都国际机场)",
+        "code": "PEK"
+    },
+    {
+        "name": "博乐",
+        "code": "BPL"
+    },
+    {
+        "name": "保山",
+        "code": "BSD"
+    },
+    {
+        "name": "白城",
+        "code": "DBC"
+    },
+    {
+        "name": "布尔津",
+        "code": "KJI"
+    },
+    {
+        "name": "白山",
+        "code": "NBS"
+    },
+    {
+        "name": "巴彦淖尔",
+        "code": "RLK"
+    },
+    {
+        "name": "昌都",
+        "code": "BPX"
+    },
+    {
+        "name": "承德",
+        "code": "CDE"
+    },
+    {
+        "name": "常德",
+        "code": "CGD"
+    },
+    {
+        "name": "长春",
+        "code": "CGQ"
+    },
+    {
+        "name": "朝阳",
+        "code": "CHG"
+    },
+    {
+        "name": "赤峰",
+        "code": "CIF"
+    },
+    {
+        "name": "长治",
+        "code": "CIH"
+    },
+    {
+        "name": "重庆",
+        "code": "CKG"
+    },
+    {
+        "name": "长沙",
+        "code": "CSX"
+    },
+    {
+        "name": "成都",
+        "code": "CTU"
+    },
+    {
+        "name": "沧源",
+        "code": "CWJ"
+    },
+    {
+        "name": "常州",
+        "code": "CZX"
+    },
+    {
+        "name": "池州",
+        "code": "JUH"
+    },
+    {
+        "name": "大同",
+        "code": "DAT"
+    },
+    {
+        "name": "达州",
+        "code": "DZH"
+    },
+    {
+        "name": "稻城",
+        "code": "DCY"
+    },
+    {
+        "name": "丹东",
+        "code": "DDG"
+    },
+    {
+        "name": "迪庆",
+        "code": "DIG"
+    },
+    {
+        "name": "大连",
+        "code": "DLC"
+    },
+    {
+        "name": "大理",
+        "code": "DLU"
+    },
+    {
+        "name": "敦煌",
+        "code": "DNH"
+    },
+    {
+        "name": "东营",
+        "code": "DOY"
+    },
+    {
+        "name": "大庆",
+        "code": "DQA"
+    },
+    {
+        "name": "德令哈",
+        "code": "HXD"
+    },
+    {
+        "name": "鄂尔多斯",
+        "code": "DSN"
+    },
+    {
+        "name": "额济纳旗",
+        "code": "EJN"
+    },
+    {
+        "name": "恩施",
+        "code": "ENH"
+    },
+    {
+        "name": "二连浩特",
+        "code": "ERL"
+    },
+    {
+        "name": "福州",
+        "code": "FOC"
+    },
+    {
+        "name": "阜阳",
+        "code": "FUG"
+    },
+    {
+        "name": "抚远",
+        "code": "FYJ"
+    },
+    {
+        "name": "富蕴",
+        "code": "FYN"
+    },
+    {
+        "name": "佛山",
+        "code": "FUO"
+    },
+    {
+        "name": "广州",
+        "code": "CAN"
+    },
+    {
+        "name": "果洛",
+        "code": "GMQ"
+    },
+    {
+        "name": "格尔木",
+        "code": "GOQ"
+    },
+    {
+        "name": "广元",
+        "code": "GYS"
+    },
+    {
+        "name": "固原",
+        "code": "GYU"
+    },
+    {
+        "name": "赣州",
+        "code": "KOW"
+    },
+    {
+        "name": "贵阳",
+        "code": "KWE"
+    },
+    {
+        "name": "桂林",
+        "code": "KWL"
+    },
+    {
+        "name": "红原",
+        "code": "AHJ"
+    },
+    {
+        "name": "海口",
+        "code": "HAK"
+    },
+    {
+        "name": "河池",
+        "code": "HCJ"
+    },
+    {
+        "name": "邯郸",
+        "code": "HDG"
+    },
+    {
+        "name": "黑河",
+        "code": "HEK"
+    },
+    {
+        "name": "呼和浩特",
+        "code": "HET"
+    },
+    {
+        "name": "合肥",
+        "code": "HFE"
+    },
+    {
+        "name": "杭州",
+        "code": "HGH"
+    },
+    {
+        "name": "淮安",
+        "code": "HIA"
+    },
+    {
+        "name": "怀化",
+        "code": "HJJ"
+    },
+    {
+        "name": "海拉尔",
+        "code": "HLD"
+    },
+    {
+        "name": "哈密",
+        "code": "HMI"
+    },
+    {
+        "name": "衡阳",
+        "code": "HNY"
+    },
+    {
+        "name": "哈尔滨",
+        "code": "HRB"
+    },
+    {
+        "name": "和田",
+        "code": "HTN"
+    },
+    {
+        "name": "花土沟",
+        "code": "HTT"
+    },
+    {
+        "name": "霍林郭勒",
+        "code": "HUO"
+    },
+    {
+        "name": "惠州",
+        "code": "HUZ"
+    },
+    {
+        "name": "汉中",
+        "code": "HZG"
+    },
+    {
+        "name": "黄山",
+        "code": "TXN"
+    },
+    {
+        "name": "呼伦贝尔",
+        "code": "XRQ"
+    },
+    {
+        "name": "菏泽",
+        "code": "HZA"
+    },
+    {
+        "name": "景德镇",
+        "code": "JDZ"
+    },
+    {
+        "name": "加格达奇",
+        "code": "JGD"
+    },
+    {
+        "name": "嘉峪关",
+        "code": "JGN"
+    },
+    {
+        "name": "井冈山",
+        "code": "JGS"
+    },
+    {
+        "name": "金昌",
+        "code": "JIC"
+    },
+    {
+        "name": "九江",
+        "code": "JIU"
+    },
+    {
+        "name": "荆门",
+        "code": "JM1"
+    },
+    {
+        "name": "佳木斯",
+        "code": "JMU"
+    },
+    {
+        "name": "济宁",
+        "code": "JNG"
+    },
+    {
+        "name": "锦州",
+        "code": "JNZ"
+    },
+    {
+        "name": "建三江",
+        "code": "JSJ"
+    },
+    {
+        "name": "鸡西",
+        "code": "JXA"
+    },
+    {
+        "name": "九寨沟",
+        "code": "JZH"
+    },
+    {
+        "name": "揭阳",
+        "code": "SWA"
+    },
+    {
+        "name": "济南",
+        "code": "TNA"
+    },
+    {
+        "name": "荆州",
+        "code": "SHS"
+    },
+    {
+        "name": "库车",
+        "code": "KCA"
+    },
+    {
+        "name": "康定",
+        "code": "KGT"
+    },
+    {
+        "name": "喀什",
+        "code": "KHG"
+    },
+    {
+        "name": "凯里",
+        "code": "KJH"
+    },
+    {
+        "name": "昆明",
+        "code": "KMG"
+    },
+    {
+        "name": "库尔勒",
+        "code": "KRL"
+    },
+    {
+        "name": "克拉玛依",
+        "code": "KRY"
+    },
+    {
+        "name": "黎平",
+        "code": "HZH"
+    },
+    {
+        "name": "澜沧",
+        "code": "JMJ"
+    },
+    {
+        "name": "龙岩",
+        "code": "LCX"
+    },
+    {
+        "name": "临汾",
+        "code": "LFQ"
+    },
+    {
+        "name": "兰州",
+        "code": "LHW"
+    },
+    {
+        "name": "丽江",
+        "code": "LJG"
+    },
+    {
+        "name": "荔波",
+        "code": "LLB"
+    },
+    {
+        "name": "吕梁",
+        "code": "LLV"
+    },
+    {
+        "name": "临沧",
+        "code": "LNJ"
+    },
+    {
+        "name": "陇南",
+        "code": "LNL"
+    },
+    {
+        "name": "六盘水",
+        "code": "LPF"
+    },
+    {
+        "name": "拉萨",
+        "code": "LXA"
+    },
+    {
+        "name": "洛阳",
+        "code": "LYA"
+    },
+    {
+        "name": "连云港",
+        "code": "LYG"
+    },
+    {
+        "name": "临沂",
+        "code": "LYI"
+    },
+    {
+        "name": "柳州",
+        "code": "LZH"
+    },
+    {
+        "name": "泸州",
+        "code": "LZO"
+    },
+    {
+        "name": "林芝",
+        "code": "LZY"
+    },
+    {
+        "name": "芒市",
+        "code": "LUM"
+    },
+    {
+        "name": "牡丹江",
+        "code": "MDG"
+    },
+    {
+        "name": "绵阳",
+        "code": "MIG"
+    },
+    {
+        "name": "梅州",
+        "code": "MXZ"
+    },
+    {
+        "name": "满洲里",
+        "code": "NZH"
+    },
+    {
+        "name": "漠河",
+        "code": "OHE"
+    },
+    {
+        "name": "南昌",
+        "code": "KHN"
+    },
+    {
+        "name": "南充",
+        "code": "NAO"
+    },
+    {
+        "name": "宁波",
+        "code": "NGB"
+    },
+    {
+        "name": "南京",
+        "code": "NKG"
+    },
+    {
+        "name": "宁蒗",
+        "code": "NLH"
+    },
+    {
+        "name": "南宁",
+        "code": "NNG"
+    },
+    {
+        "name": "南阳",
+        "code": "NNY"
+    },
+    {
+        "name": "南通",
+        "code": "NTG"
+    },
+    {
+        "name": "攀枝花",
+        "code": "PZI"
+    },
+    {
+        "name": "普洱",
+        "code": "SYM"
+    },
+    {
+        "name": "琼海",
+        "code": "BAR"
+    },
+    {
+        "name": "秦皇岛",
+        "code": "BPE"
+    },
+    {
+        "name": "祁连",
+        "code": "HBQ"
+    },
+    {
+        "name": "且末",
+        "code": "IQM"
+    },
+    {
+        "name": "庆阳",
+        "code": "IQN"
+    },
+    {
+        "name": "黔江",
+        "code": "JIQ"
+    },
+    {
+        "name": "泉州",
+        "code": "JJN"
+    },
+    {
+        "name": "衢州",
+        "code": "JUZ"
+    },
+    {
+        "name": "齐齐哈尔",
+        "code": "NDG"
+    },
+    {
+        "name": "青岛",
+        "code": "TAO"
+    },
+    {
+        "name": "日照",
+        "code": "RIZ"
+    },
+    {
+        "name": "日喀则",
+        "code": "RKZ"
+    },
+    {
+        "name": "若羌",
+        "code": "RQA"
+    },
+    {
+        "name": "神农架",
+        "code": "HPG"
+    },
+    {
+        "name": "莎车",
+        "code": "QSZ"
+    },
+    {
+        "name": "上海",
+        "code": "SHA"
+    },
+    {
+        "name": "沈阳",
+        "code": "SHE"
+    },
+    {
+        "name": "石河子",
+        "code": "SHF"
+    },
+    {
+        "name": "石家庄",
+        "code": "SJW"
+    },
+    {
+        "name": "上饶",
+        "code": "SQD"
+    },
+    {
+        "name": "三明",
+        "code": "SQJ"
+    },
+    {
+        "name": "三亚",
+        "code": "SYX"
+    },
+    {
+        "name": "深圳",
+        "code": "SZX"
+    },
+    {
+        "name": "十堰",
+        "code": "WDS"
+    },
+    {
+        "name": "邵阳",
+        "code": "WGN"
+    },
+    {
+        "name": "松原",
+        "code": "YSQ"
+    },
+    {
+        "name": "台州",
+        "code": "HYN"
+    },
+    {
+        "name": "塔城",
+        "code": "TCG"
+    },
+    {
+        "name": "腾冲",
+        "code": "TCZ"
+    },
+    {
+        "name": "铜仁",
+        "code": "TEN"
+    },
+    {
+        "name": "通辽",
+        "code": "TGO"
+    },
+    {
+        "name": "天水",
+        "code": "THQ"
+    },
+    {
+        "name": "吐鲁番",
+        "code": "TLQ"
+    },
+    {
+        "name": "通化",
+        "code": "TNH"
+    },
+    {
+        "name": "天津",
+        "code": "TSN"
+    },
+    {
+        "name": "唐山",
+        "code": "TVS"
+    },
+    {
+        "name": "太原",
+        "code": "TYN"
+    },
+    {
+        "name": "五大连池",
+        "code": "DTU"
+    },
+    {
+        "name": "乌兰浩特",
+        "code": "HLH"
+    },
+    {
+        "name": "乌兰察布",
+        "code": "UCB"
+    },
+    {
+        "name": "乌鲁木齐",
+        "code": "URC"
+    },
+    {
+        "name": "潍坊",
+        "code": "WEF"
+    },
+    {
+        "name": "威海",
+        "code": "WEH"
+    },
+    {
+        "name": "文山",
+        "code": "WNH"
+    },
+    {
+        "name": "温州",
+        "code": "WNZ"
+    },
+    {
+        "name": "乌海",
+        "code": "WUA"
+    },
+    {
+        "name": "武汉",
+        "code": "WUH"
+    },
+    {
+        "name": "武夷山",
+        "code": "WUS"
+    },
+    {
+        "name": "无锡",
+        "code": "WUX"
+    },
+    {
+        "name": "梧州",
+        "code": "WUZ"
+    },
+    {
+        "name": "万州",
+        "code": "WXN"
+    },
+    {
+        "name": "乌拉特中旗",
+        "code": "WZQ"
+    },
+    {
+        "name": "巫山",
+        "code": "WSK"
+    },
+    {
+        "name": "武隆",
+        "code": "CQW"
+    },
+    {
+        "name": "芜湖",
+        "code": "WHU"
+    },
+    {
+        "name": "兴义",
+        "code": "ACX"
+    },
+    {
+        "name": "夏河",
+        "code": "GXH"
+    },
+    {
+        "name": "西双版纳",
+        "code": "JHG"
+    },
+    {
+        "name": "新源",
+        "code": "NLT"
+    },
+    {
+        "name": "西安",
+        "code": "SIA"
+    },
+    {
+        "name": "忻州",
+        "code": "WUT"
+    },
+    {
+        "name": "信阳",
+        "code": "XAI"
+    },
+    {
+        "name": "襄阳",
+        "code": "XFN"
+    },
+    {
+        "name": "西昌",
+        "code": "XIC"
+    },
+    {
+        "name": "锡林浩特",
+        "code": "XIL"
+    },
+    {
+        "name": "厦门",
+        "code": "XMN"
+    },
+    {
+        "name": "西宁",
+        "code": "XNN"
+    },
+    {
+        "name": "徐州",
+        "code": "XUZ"
+    },
+    {
+        "name": "延安",
+        "code": "ENY"
+    },
+    {
+        "name": "银川",
+        "code": "INC"
+    },
+    {
+        "name": "伊春",
+        "code": "LDS"
+    },
+    {
+        "name": "永州",
+        "code": "LLF"
+    },
+    {
+        "name": "榆林",
+        "code": "UYN"
+    },
+    {
+        "name": "宜宾",
+        "code": "YBP"
+    },
+    {
+        "name": "运城",
+        "code": "YCU"
+    },
+    {
+        "name": "宜春",
+        "code": "YIC"
+    },
+    {
+        "name": "宜昌",
+        "code": "YIH"
+    },
+    {
+        "name": "伊宁",
+        "code": "YIN"
+    },
+    {
+        "name": "义乌",
+        "code": "YIW"
+    },
+    {
+        "name": "营口",
+        "code": "YKH"
+    },
+    {
+        "name": "延吉",
+        "code": "YNJ"
+    },
+    {
+        "name": "烟台",
+        "code": "YNT"
+    },
+    {
+        "name": "盐城",
+        "code": "YNZ"
+    },
+    {
+        "name": "扬州",
+        "code": "YTY"
+    },
+    {
+        "name": "玉树",
+        "code": "YUS"
+    },
+    {
+        "name": "玉林",
+        "code": "YLX"
+    },
+    {
+        "name": "岳阳",
+        "code": "YYA"
+    },
+    {
+        "name": "郑州",
+        "code": "CGO"
+    },
+    {
+        "name": "张家界",
+        "code": "DYG"
+    },
+    {
+        "name": "舟山",
+        "code": "HSN"
+    },
+    {
+        "name": "扎兰屯",
+        "code": "NZL"
+    },
+    {
+        "name": "张掖",
+        "code": "YZY"
+    },
+    {
+        "name": "昭通",
+        "code": "ZAT"
+    },
+    {
+        "name": "湛江",
+        "code": "ZHA"
+    },
+    {
+        "name": "中卫",
+        "code": "ZHY"
+    },
+    {
+        "name": "张家口",
+        "code": "ZQZ"
+    },
+    {
+        "name": "珠海",
+        "code": "ZUH"
+    },
+    {
+        "name": "遵义",
+        "code": "ZYI"
+    }
+]

@@ -1,3 +1,7 @@
 services:
   rpc:
-    build: rpc
+    build:
+      context: .
+      dockerfile: ./rpc/Dockerfile
+    ports:
+      - "3368:3368"

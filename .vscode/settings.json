@@ -5,6 +5,7 @@
     },
     "cmake.sourceDirectory": "/workspaces/airfare-search-service",
     "files.associations": {
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "iostream": "cpp"
     }
 }

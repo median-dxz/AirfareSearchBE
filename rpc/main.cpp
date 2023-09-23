@@ -12,6 +12,8 @@
 
 #include "./protos/SearchRequest.grpc.pb.h"
 
+#include "../database/database.h"
+
 ABSL_FLAG(uint16_t, port, 3368, "Server port for the service");
 
 using grpc::Server;
@@ -204,6 +206,9 @@ class ServerImpl final {
 int main(int argc, char **argv) {
     absl::ParseCommandLine(argc, argv);
     ServerImpl server;
+    Database db;
+    db.init();
+    
     server.Run(absl::GetFlag(FLAGS_port));
 
     return 0;

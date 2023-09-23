@@ -1,12 +1,9 @@
-FROM ubuntu:latest
+FROM ubuntu:23.10
 
-COPY . .
+COPY ./build/rpc/main /tmp
 
-RUN mv -f ./mirror-sources.list /etc/apt/sources.list 
+EXPOSE 3368
 
-RUN apt update
+RUN chmod +x /tmp/main
 
-RUN apt install cmake g++ -y
-RUN apt install libgrpc++-dev -y
-
-CMD [ "/bin/sh", "run.sh" ]
+ENTRYPOINT [ "/tmp/main" ]

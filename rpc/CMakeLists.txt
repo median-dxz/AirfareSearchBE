@@ -1,4 +1,4 @@
-project(rpc CXX)
+project(rpc)
 
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
@@ -24,3 +24,5 @@ target_link_libraries(main
     gRPC::grpc++_reflection
     gRPC::grpc++
 )
+
+include("../database/CMakeLists.txt")

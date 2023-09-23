@@ -1,0 +1,19 @@
+{
+  "name": "data-generator",
+  "private": true,
+  "type": "module",
+  "main": "main.js",
+  "packageManager": "pnpm@8.7.6",
+  "scripts": {
+    "start": "node .",
+    "generateAgencies": "node generateAgencies.js",
+    "generateData": "node generatreData.js"
+  },
+  "dependencies": {
+    "@types/node": "^20.6.3",
+    "dayjs": "^1.11.10",
+    "fast-json-stable-stringify": "^2.1.0",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6"
+  }
+}
