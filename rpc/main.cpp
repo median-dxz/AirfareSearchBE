@@ -10,9 +10,9 @@
 #include <grpc/support/log.h>
 #include <grpcpp/grpcpp.h>
 
-#include "./protos/SearchRequest.grpc.pb.h"
+#include <spdlog/spdlog.h>
 
-#include "../database/database.h"
+#include "protos/SearchRequest.grpc.pb.h"
 
 ABSL_FLAG(uint16_t, port, 3368, "Server port for the service");
 
@@ -87,8 +87,6 @@ class ServerImpl final {
                 new CallData(service_, cq_);
 
                 // The actual processing.
-                std::string prefix("Hello ");
-
                 auto r1 = reply_.add_data();
                 auto r2 = reply_.add_data();
 
@@ -206,9 +204,7 @@ class ServerImpl final {
 int main(int argc, char **argv) {
     absl::ParseCommandLine(argc, argv);
     ServerImpl server;
-    Database db;
-    db.init();
-    
+
     server.Run(absl::GetFlag(FLAGS_port));
 
     return 0;

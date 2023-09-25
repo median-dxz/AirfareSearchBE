@@ -11,3 +11,5 @@ CTestTestfile.cmake
 _deps
 build
 node_modules
+
+**/sqlite/*.db

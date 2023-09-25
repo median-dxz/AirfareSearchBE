@@ -17,8 +17,10 @@ const MAX_PRICE_RULE = 1000;
 // const MAX_FLIGHT_ROUTE = 2;
 // const MAX_PRICE_RULE = 100;
 
+const db_filename = process.argv[2];
+
 const db = await db_open({
-    filename: "../database/sqlite/as.db",
+    filename: db_filename,
     driver: sqlite3.Database,
 });
 
@@ -183,7 +185,8 @@ function generate() {
     const _nextCity = () => _cityUsed[getRand(0, _cityUsed.length - 1)];
 
     // 生成运价规则
-    for (let sequenceNo = 1; sequenceNo <= MAX_PRICE_RULE; sequenceNo++) {
+    const price_rules_limit = getRand(MAX_PRICE_RULE / 2, MAX_PRICE_RULE);
+    for (let sequenceNo = 1; sequenceNo <= price_rules_limit; sequenceNo++) {
         const carrier = nextCarrier();
         const departure = getRand(0, 2) ? "" : _nextCity();
         const arrival = getRand(0, 2) ? "" : _nextCity();
@@ -196,7 +199,6 @@ function generate() {
                 VALUES (${sequenceNo}, '${carrier}', '${departure}', '${arrival}', '${_nextCarrier}', '${agencies}', ${subcharge});\n`;
     }
     console.timeLog("generation", "price rules generated");
-    console.timeEnd("generation");
 
     return sql;
 }
@@ -205,8 +207,10 @@ try {
     const sql = generate();
     // console.log(sql);
     await db.exec(sql);
+    console.timeEnd("generation");
     console.log("data generation finished.");
-    await db.close();
 } catch (error) {
     console.error(error);
+} finally {
+    await db.close();
 }

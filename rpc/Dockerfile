@@ -1,6 +1,6 @@
 FROM ubuntu:23.10
 
-COPY ./build/rpc/main /tmp
+COPY ./build/main /tmp
 
 EXPOSE 3368
 

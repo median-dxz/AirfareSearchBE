@@ -1,21 +1,37 @@
 project(rpc)
 
+get_filename_component(rpc_proto "./protos/SearchRequest.proto" ABSOLUTE)
+get_filename_component(rpc_proto_path "${rpc_proto}" PATH)
+
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 
-# 获取proto文件
-get_filename_component(rpc_proto "./protos/SearchRequest.proto" ABSOLUTE)
-get_filename_component(rpc_proto_path "${rpc_proto}" PATH)
-set(protos_dir "./protos")
+find_package(SQLite3 REQUIRED)
+find_package(SqliteOrm REQUIRED)
 
-add_executable(main main.cpp 
-    ${protos_dir}/SearchRequest.grpc.pb.cc
-    ${protos_dir}/SearchRequest.grpc.pb.h
-    ${protos_dir}/SearchRequest.pb.cc
-    ${protos_dir}/SearchRequest.pb.h
+find_package(spdlog CONFIG REQUIRED)
+
+add_executable(main main.cpp)
+
+set(protos_dir "protos")
+file(GLOB_RECURSE rpc_server_gen
+    "${protos_dir}/*.cc"
+    "${protos_dir}/*.h"
 )
+target_sources(main PRIVATE ${rpc_server_gen})
+target_sources(main PRIVATE
+    ${DIR_MODULE_DATABASE}/database.cpp
+    ${DIR_MODULE_DATABASE}/database.h
+)
+target_compile_definitions(main PRIVATE SQLITE_ORM_OPTIONAL_SUPPORTED=1)
+target_include_directories(main PRIVATE ${DIR_MODULE_DATABASE})
 
-set_target_properties(main PROPERTIES CMAKE_CXX_STANDARD 17)
+file(GLOB_RECURSE search_service_source
+    "${DIR_MODULE_SEARCH_SERVICE}/*.cpp"
+    "${DIR_MODULE_SEARCH_SERVICE}/*.h"
+)
+target_sources(main PRIVATE search_service_source)
+target_include_directories(main PRIVATE ${DIR_MODULE_SEARCH_SERVICE})
 
 target_link_libraries(main 
     absl::flags
@@ -25,4 +41,9 @@ target_link_libraries(main
     gRPC::grpc++
 )
 
-include("../database/CMakeLists.txt")
+target_link_libraries(main 
+    sqlite_orm::sqlite_orm
+    SQLite::SQLite3
+)
+
+target_link_libraries(main spdlog::spdlog)

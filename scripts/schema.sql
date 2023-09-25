@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS flight (
-    carrier CHAR(2),
-    flightNo NUMERIC,
-    departureDatetime CHAR(12),
-    arrivalDatetime CHAR(12),
-    departure CHAR(3),
-    arrival CHAR(3)
+    carrier TEXT,
+    flightNo INT,
+    departureDatetime TEXT,
+    arrivalDatetime TEXT,
+    departure TEXT,
+    arrival TEXT
 );
 
 CREATE INDEX IF NOT EXISTS flight_index ON flight (
@@ -13,11 +13,11 @@ CREATE INDEX IF NOT EXISTS flight_index ON flight (
 
 
 CREATE TABLE IF NOT EXISTS price (
-    carrier CHAR(2),
-    departure CHAR(3),
-    arrival CHAR(3),
-    cabin CHAR(1),
-    amount NUMERIC,
+    carrier TEXT,
+    departure TEXT,
+    arrival TEXT,
+    cabin TEXT,
+    amount INT,
     CHECK(cabin IN ('F', 'C', 'Y'))
 );
 
@@ -26,22 +26,22 @@ CREATE INDEX IF NOT EXISTS flight_index ON flight (
 );
 
 CREATE TABLE IF NOT EXISTS price_rule (
-    sequenceNo NUMERIC UNIQUE,
-    carrier CHAR(2),
-    departure CHAR(3),
-    arrival CHAR(3),
-    nextCarrier CHAR(2),
+    sequenceNo INT UNIQUE,
+    carrier TEXT,
+    departure TEXT,
+    arrival TEXT,
+    nextCarrier TEXT,
     agencies TEXT,
-    subcharge NUMERIC,
+    subcharge INT,
     CHECK(subcharge >= -1 AND subcharge <= 100)
 );
 
 CREATE TABLE IF NOT EXISTS seat (
-    carrier CHAR(2),
-    flightNo NUMERIC,
-    departure CHAR(3),
-    arrival CHAR(3),
-    departureDatetime CHAR(12),
+    carrier TEXT,
+    flightNo INT,
+    departure TEXT,
+    arrival TEXT,
+    departureDatetime TEXT,
     seatF,
     seatC,
     seatY,
