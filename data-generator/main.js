@@ -1,11 +1,7 @@
 import { getRand } from "./common.js";
-import sqlite3 from "sqlite3";
-import { open as db_open } from "sqlite";
 import dayjs from "dayjs";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import fast_stringify from "fast-json-stable-stringify";
-
-sqlite3.verbose();
 
 const CARRIERS = ["CA", "MU", "CZ", "HU", "FM", "ZH", "3U", "MF"];
 const MAX_FLIGHT_NO = 999;
@@ -17,16 +13,7 @@ const MAX_PRICE_RULE = 1000;
 // const MAX_FLIGHT_ROUTE = 2;
 // const MAX_PRICE_RULE = 100;
 
-const db_filename = process.argv[2];
-
-const db = await db_open({
-    filename: db_filename,
-    driver: sqlite3.Database,
-});
-
-db.on("trace", (data) => {
-    // console.warn(data);
-});
+const sql_filename = process.argv[2];
 
 const cities = JSON.parse(readFileSync("./cities.json", { encoding: "utf-8" }));
 const agencies = JSON.parse(
@@ -206,11 +193,9 @@ function generate() {
 try {
     const sql = generate();
     // console.log(sql);
-    await db.exec(sql);
+    writeFileSync(sql_filename, sql);
     console.timeEnd("generation");
     console.log("data generation finished.");
 } catch (error) {
     console.error(error);
-} finally {
-    await db.close();
 }

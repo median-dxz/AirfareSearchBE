@@ -22,3 +22,17 @@ RUN su vscode -c "${VCPKG_ROOT}/vcpkg install sqlite-orm"
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends build-essential gdb
+
+RUN apt update && apt install lsb-release software-properties-common gnupg -y -qq
+
+RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+
+RUN mv /usr/bin/clang /usr/bin/clang-14
+RUN ln -s /usr/bin/clang-17 /usr/bin/clang
+
+RUN mv /usr/bin/clang++ /usr/bin/clang++-14
+RUN ln -s /usr/bin/clang++-17 /usr/bin/clang++
+
+RUN ln -s /usr/bin/lld-17 /usr/bin/lld
+
+RUN su vscode -c "${VCPKG_ROOT}/vcpkg install spdlog"

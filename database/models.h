@@ -94,7 +94,7 @@ struct Seat {
     std::string departure;
     std::string arrival;
     std::string departureDatetime;
-    char seatF;
-    char seatC;
-    char seatY;
+    std::string seatF;
+    std::string seatC;
+    std::string seatY;
 };

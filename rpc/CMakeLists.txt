@@ -1,39 +1,47 @@
-project(rpc)
+project(airfare_search_main)
 
 get_filename_component(rpc_proto "./protos/SearchRequest.proto" ABSOLUTE)
 get_filename_component(rpc_proto_path "${rpc_proto}" PATH)
 
-find_package(Protobuf CONFIG REQUIRED)
-find_package(gRPC CONFIG REQUIRED)
-
-find_package(SQLite3 REQUIRED)
-find_package(SqliteOrm REQUIRED)
-
-find_package(spdlog CONFIG REQUIRED)
-
 add_executable(main main.cpp)
 
-set(protos_dir "protos")
+target_sources(main PRIVATE data_builder.cpp data_builder.h)
+
+# add proto_gen
 file(GLOB_RECURSE rpc_server_gen
-    "${protos_dir}/*.cc"
-    "${protos_dir}/*.h"
+    "${rpc_proto_path}/*.cc"
+    "${rpc_proto_path}/*.h"
 )
+
+add_library(grpc_proto ${rpc_server_gen})
+
+target_link_libraries(grpc_proto
+    protobuf::libprotobuf
+    gRPC::grpc++_reflection
+    gRPC::grpc++
+)
+
 target_sources(main PRIVATE ${rpc_server_gen})
-target_sources(main PRIVATE
-    ${DIR_MODULE_DATABASE}/database.cpp
-    ${DIR_MODULE_DATABASE}/database.h
+
+# add database
+file(GLOB_RECURSE database_source
+    "${DIR_MODULE_DATABASE}/*.cpp"
+    "${DIR_MODULE_DATABASE}/*.h"
 )
 target_compile_definitions(main PRIVATE SQLITE_ORM_OPTIONAL_SUPPORTED=1)
+target_sources(main PRIVATE ${database_source})
 target_include_directories(main PRIVATE ${DIR_MODULE_DATABASE})
 
+# add search-service
 file(GLOB_RECURSE search_service_source
     "${DIR_MODULE_SEARCH_SERVICE}/*.cpp"
     "${DIR_MODULE_SEARCH_SERVICE}/*.h"
 )
-target_sources(main PRIVATE search_service_source)
+target_sources(main PRIVATE ${search_service_source})
 target_include_directories(main PRIVATE ${DIR_MODULE_SEARCH_SERVICE})
 
 target_link_libraries(main 
+    grpc_proto
     absl::flags
     absl::flags_parse
     protobuf::libprotobuf

@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -14,7 +15,16 @@
 
 #include "protos/SearchRequest.grpc.pb.h"
 
+#include "data_builder.h"
+#include "database.h"
+#include "service.h"
+
+namespace fs = std::filesystem;
+
+const string DEFAULT_DB_FILE = fs::absolute(fs::path(getenv("HOME")) / "as_data" / "as.db");
+
 ABSL_FLAG(uint16_t, port, 3368, "Server port for the service");
+ABSL_FLAG(std::string, db_file, DEFAULT_DB_FILE, "Path of database for server");
 
 using grpc::Server;
 using grpc::ServerAsyncResponseWriter;
@@ -27,6 +37,9 @@ using AirfareSearch::FlightsSearchService;
 using AirfareSearch::SearchRequest;
 using AirfareSearch::SearchResponse;
 
+using std::string;
+namespace fs = std::filesystem;
+
 class ServerImpl final {
   public:
     ~ServerImpl() {
@@ -36,20 +49,21 @@ class ServerImpl final {
     }
 
     // There is no shutdown handling in this code.
-    void Run(uint16_t port) {
+    void Run(uint16_t port, std::string db_file) {
         std::string server_address = absl::StrFormat("0.0.0.0:%d", port);
+        // 初始化数据库
+        Database::getStroage(db_file);
 
         ServerBuilder builder;
-        // Listen on the given address without any authentication mechanism.
+
         builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-        // Register "service_" as the instance through which we'll communicate with
-        // clients. In this case it corresponds to an *asynchronous* service.
         builder.RegisterService(&service_);
         // Get hold of the completion queue used for the asynchronous communication
         // with the gRPC runtime.
         cq_ = builder.AddCompletionQueue();
         // Finally assemble the server.
         server_ = builder.BuildAndStart();
+
         std::cout << "Server listening on " << server_address << std::endl;
 
         // Proceed to the server's main loop.
@@ -85,63 +99,14 @@ class ServerImpl final {
                 // the one for this CallData. The instance will deallocate itself as
                 // part of its FINISH state.
                 new CallData(service_, cq_);
+                spdlog::info("[main server]: handle a rpc call");
 
                 // The actual processing.
-                auto r1 = reply_.add_data();
-                auto r2 = reply_.add_data();
+                auto &ins = AirfareSearch::DataBuilder::getInstance();
+                auto reponse = AirfareSearch::search(ins.request(this->request_));
 
-                r1->add_agencies("BJS001");
-                r1->add_agencies("CAN001");
-
-                auto f1 = r1->add_flights();
-                auto f2 = r1->add_flights();
-
-                r1->set_price(3200);
-
-                AirfareSearch::City c1;
-                AirfareSearch::City c2;
-                AirfareSearch::City c3;
-                AirfareSearch::City c4;
-                AirfareSearch::City c5;
-                AirfareSearch::City c6;
-
-                c1.set_code("AAA");
-                c1.set_name("中国");
-
-                c2.set_code("AAC");
-                c2.set_code("BBB");
-
-                f1->set_allocated_arrival(new AirfareSearch::City(c1));
-                f1->set_arrivaldatetime("111122334455");
-                f1->set_allocated_departure(new AirfareSearch::City(c2));
-                f1->set_departuredatetime("111122334455");
-                f1->set_carrier("AA");
-                f1->set_flightno("24154");
-                f1->add_cabins(AirfareSearch::Cabin::F);
-                f1->add_cabins(AirfareSearch::Cabin::Y);
-
-                f2->set_allocated_arrival(new AirfareSearch::City(c1));
-                f2->set_arrivaldatetime("111122334455");
-                f2->set_allocated_departure(new AirfareSearch::City(c2));
-                f2->set_departuredatetime("111122334455");
-                f2->set_carrier("AA");
-                f2->set_flightno("24154");
-                f2->add_cabins(AirfareSearch::Cabin::F);
-                f2->add_cabins(AirfareSearch::Cabin::Y);
-
-                r2->add_agencies("BJS001");
-                r2->add_agencies("CAN001");
-
-                auto f3 = r2->add_flights();
-                f3->set_allocated_arrival(new AirfareSearch::City(c1));
-                f3->set_arrivaldatetime("111122334455");
-                f3->set_allocated_departure(new AirfareSearch::City(c2));
-                f3->set_departuredatetime("111122334455");
-                f3->set_carrier("AA");
-                f3->set_flightno("24154");
-                f3->add_cabins(AirfareSearch::Cabin::F);
-                f3->add_cabins(AirfareSearch::Cabin::Y);
-
+                ins.bindResponse(this->reply_, reponse);
+                spdlog::info("[main server]: finish handling");
                 // And we are done! Let the gRPC runtime know we've finished, using the
                 // memory address of this instance as the uniquely identifying tag for
                 // the event.
@@ -205,7 +170,7 @@ int main(int argc, char **argv) {
     absl::ParseCommandLine(argc, argv);
     ServerImpl server;
 
-    server.Run(absl::GetFlag(FLAGS_port));
+    server.Run(absl::GetFlag(FLAGS_port), absl::GetFlag(FLAGS_db_file));
 
     return 0;
 }
