@@ -18,5 +18,16 @@ find_package(SqliteOrm REQUIRED)
 
 find_package(spdlog CONFIG REQUIRED)
 
+set(database_sources
+    ${DIR_MODULE_DATABASE}/database.cpp
+    ${DIR_MODULE_DATABASE}/database.h
+    ${DIR_MODULE_DATABASE}/models.h
+)
+
+set(service_sources
+    ${DIR_MODULE_SEARCH_SERVICE}/service.cpp
+    ${DIR_MODULE_SEARCH_SERVICE}/service.h
+)
+
 add_subdirectory(rpc)
 add_subdirectory(test)

@@ -21,7 +21,7 @@
 
 namespace fs = std::filesystem;
 
-const string DEFAULT_DB_FILE = fs::absolute(fs::path(getenv("HOME")) / "as_data" / "as.db");
+const string DEFAULT_DB_FILE = fs::absolute(fs::path("/var") / "as_data" / "as.db");
 
 ABSL_FLAG(uint16_t, port, 3368, "Server port for the service");
 ABSL_FLAG(std::string, db_file, DEFAULT_DB_FILE, "Path of database for server");

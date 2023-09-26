@@ -3,17 +3,28 @@ project(airfare_search_main)
 get_filename_component(rpc_proto "./protos/SearchRequest.proto" ABSOLUTE)
 get_filename_component(rpc_proto_path "${rpc_proto}" PATH)
 
-add_executable(main main.cpp)
+add_executable(main main.cpp data_builder.cpp data_builder.h)
 
-target_sources(main PRIVATE data_builder.cpp data_builder.h)
+include_directories(${rpc_proto_path} ${DIR_MODULE_DATABASE} ${DIR_MODULE_SEARCH_SERVICE})
 
-# add proto_gen
-file(GLOB_RECURSE rpc_server_gen
-    "${rpc_proto_path}/*.cc"
-    "${rpc_proto_path}/*.h"
+# add grpc_proto
+file(GLOB_RECURSE grpc_gen_source "${rpc_proto_path}/*.cc")
+file(GLOB_RECURSE grpc_gen_header "${rpc_proto_path}/*.h")
+
+add_library(grpc_proto ${grpc_gen_source} ${grpc_gen_header})
+
+# add search-service
+add_library(search_service ${service_sources})
+
+target_compile_definitions(search_service PRIVATE SQLITE_ORM_OPTIONAL_SUPPORTED=1)
+target_sources(search_service PRIVATE ${database_sources})
+
+# link shared lib
+target_link_libraries(search_service
+    sqlite_orm::sqlite_orm
+    SQLite::SQLite3
+    spdlog::spdlog
 )
-
-add_library(grpc_proto ${rpc_server_gen})
 
 target_link_libraries(grpc_proto
     protobuf::libprotobuf
@@ -21,37 +32,17 @@ target_link_libraries(grpc_proto
     gRPC::grpc++
 )
 
-target_sources(main PRIVATE ${rpc_server_gen})
-
-# add database
-file(GLOB_RECURSE database_source
-    "${DIR_MODULE_DATABASE}/*.cpp"
-    "${DIR_MODULE_DATABASE}/*.h"
+# link main
+target_link_libraries(main 
+    search_service
+    grpc_proto
 )
-target_compile_definitions(main PRIVATE SQLITE_ORM_OPTIONAL_SUPPORTED=1)
-target_sources(main PRIVATE ${database_source})
-target_include_directories(main PRIVATE ${DIR_MODULE_DATABASE})
-
-# add search-service
-file(GLOB_RECURSE search_service_source
-    "${DIR_MODULE_SEARCH_SERVICE}/*.cpp"
-    "${DIR_MODULE_SEARCH_SERVICE}/*.h"
-)
-target_sources(main PRIVATE ${search_service_source})
-target_include_directories(main PRIVATE ${DIR_MODULE_SEARCH_SERVICE})
 
 target_link_libraries(main 
-    grpc_proto
+    spdlog::spdlog
     absl::flags
     absl::flags_parse
     protobuf::libprotobuf
     gRPC::grpc++_reflection
     gRPC::grpc++
 )
-
-target_link_libraries(main 
-    sqlite_orm::sqlite_orm
-    SQLite::SQLite3
-)
-
-target_link_libraries(main spdlog::spdlog)

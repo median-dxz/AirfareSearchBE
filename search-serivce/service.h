@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 
-#include "models.h"
 #include "database.h"
+#include "models.h"
 
 using std::string;
 using std::vector;

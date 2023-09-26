@@ -29,8 +29,7 @@ SearchService::Response AirfareSearch::search(SearchService::Request req) {
     fr2.flights = vector<SearchService::Flight>{f1, f3};
     fr3.flights = vector<SearchService::Flight>{f3, f2};
 
-    res.data = vector<SearchService::FlightResult>{fr1, fr2};
-    res.data = vector<SearchService::FlightResult>{fr3};
+    res.data = vector<SearchService::FlightResult>{fr1, fr2, fr3};
 
     return res;
 }

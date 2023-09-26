@@ -17,7 +17,7 @@ namespace AirfareSearch {
         DataBuilder &operator=(const DataBuilder &) = delete;
 
         SearchService::Request request(SearchRequest req);
-        void bindResponse(SearchResponse res_, SearchService::Response res);
+        void bindResponse(SearchResponse &res_, SearchService::Response res);
 
       private:
         DataBuilder() {}

@@ -17,7 +17,7 @@ namespace AirfareSearch {
         return req;
     }
 
-    void DataBuilder::bindResponse(SearchResponse res_, SearchService::Response res) {
+    void DataBuilder::bindResponse(SearchResponse &res_, SearchService::Response res) {
         for (const auto &i : res.data) {
             auto data = res_.add_data();
             data->set_price(i.price);

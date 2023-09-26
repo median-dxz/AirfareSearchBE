@@ -2,6 +2,10 @@ services:
   rpc:
     build:
       context: .
-      dockerfile: ./rpc/Dockerfile
+      dockerfile: ./Dockerfile
     ports:
       - "3368:3368"
+    volumes:
+      - as_data:/var/as_data
+volumes:
+  as_data:
