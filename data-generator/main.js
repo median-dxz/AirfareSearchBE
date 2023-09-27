@@ -1,12 +1,37 @@
+// for invailated docker run instruction cache
+// rand seed: 4874jjd
+
 import { getRand } from "./common.js";
 import dayjs from "dayjs";
 import { readFileSync, writeFileSync } from "fs";
 import fast_stringify from "fast-json-stable-stringify";
 
 const CARRIERS = ["CA", "MU", "CZ", "HU", "FM", "ZH", "3U", "MF"];
-const MAX_FLIGHT_NO = 999;
-const MAX_FLIGHT_ROUTE = 200;
-const MAX_PRICE_RULE = 1000;
+const HOT_CITIES = [
+    "BJS",
+    "SHA",
+    "CAN",
+    "SZX",
+    "CTU",
+    "HGH",
+    "WUH",
+    "SIA",
+    "CKG",
+    "TAO",
+    "CSX",
+    "NKG",
+    "XMN",
+    "KMG",
+    "DLC",
+    "TSN",
+    "CGO",
+    "SYX",
+    "TNA",
+    "FOC",
+];
+const MAX_FLIGHT_NO = 1500;
+const MAX_FLIGHT_ROUTE = 90;
+const MAX_PRICE_RULE = 500;
 
 // const CARRIERS = ["CA", "MU"];
 // const MAX_FLIGHT_NO = 20;
@@ -21,7 +46,7 @@ const agencies = JSON.parse(
 );
 
 const nextSeat = () => {
-    const n = getRand(0, 15);
+    const n = getRand(0, 12);
     if (n <= 9) {
         return n.toString();
     } else {
@@ -29,8 +54,18 @@ const nextSeat = () => {
     }
 };
 
-const nextCity = () => {
-    return cities[getRand(0, cities.length - 1)].code;
+const nextCity = (/** @type {string | undefined} */ prev) => {
+    let nxt;
+    if (getRand(0, 20) === 0) {
+        do {
+            nxt = cities[getRand(0, cities.length - 1)].code;
+        } while (nxt === prev);
+    } else {
+        do {
+            nxt = HOT_CITIES[getRand(0, HOT_CITIES.length - 1)];
+        } while (nxt === prev);
+    }
+    return nxt;
 };
 
 const nextCarrier = () => {
@@ -72,12 +107,12 @@ class Flight {
     next() {
         if (this.routes.length === 0) {
             const start = dayjs("2024-01-01 05:00:00").add(
-                getRand(0, 100),
+                getRand(0, 5),
                 "day"
             );
             const route = new Route();
             route.departure = nextCity();
-            route.arrival = nextCity();
+            route.arrival = nextCity(route.departure);
             route.departureDatetime = start.toDate();
             route.arrivalDatetime = start
                 .add(getRand(60, 180), "minutes")
@@ -88,9 +123,9 @@ class Flight {
             const last = this.routes[this.routes.length - 1];
             const route = new Route();
             route.departure = last.arrival;
-            route.arrival = nextCity();
+            route.arrival = nextCity(route.departure);
             route.departureDatetime = dayjs(last.arrivalDatetime)
-                .add(getRand(8, 24 * 5), "hour")
+                .add(getRand(8, 24), "hour")
                 .toDate();
             route.arrivalDatetime = dayjs(route.departureDatetime)
                 .add(getRand(60, 180), "minutes")
@@ -111,10 +146,10 @@ function generate() {
     console.time("generation");
     // 生成航班和配套余座
     for (const carrier of CARRIERS) {
-        for (let i = 1; i < getRand(5, MAX_FLIGHT_NO / 3); i++) {
+        for (let i = 1; i < getRand(20, MAX_FLIGHT_NO / 2); i++) {
             const f = new Flight(carrier, i);
 
-            for (let j = 1; j < getRand(2, MAX_FLIGHT_ROUTE); j++) {
+            for (let j = 1; j < MAX_FLIGHT_ROUTE; j++) {
                 if (!f.next()) {
                     break;
                 }

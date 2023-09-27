@@ -42,9 +42,11 @@ static auto createStroage(std::string db_path) {
     spdlog::info("[database]: load db file :{}", db_path);
 
     auto stroage = make_storage(
-        db_path, make_index("flight_index", &Flight::carrier, &Flight::flightNo, &Flight::departure, &Flight::arrival),
+        db_path, 
+        make_index("flight_departrue_datetime_index", &Flight::departureDatetime),
+        make_index("flight_index", &Flight::departure, &Flight::arrival),
         make_index("price_index", &Price::carrier, &Price::departure, &Price::arrival),
-        make_index("seat_index", &Seat::carrier, &Seat::flightNo, &Seat::departure, &Seat::arrival), flight_table,
+        make_index("seat_index", &Seat::departure, &Seat::arrival), flight_table,
         price_table, price_rule_table, seat_table);
 
     stroage.sync_schema();

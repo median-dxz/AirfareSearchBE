@@ -8,10 +8,10 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-const string DB_PATH = fs::absolute(fs::path(getenv("HOME")) / "as_data" / "as.db");
+const string DEFAULT_DB_FILE = fs::absolute(fs::path("/var") / "as_data" / "as.db");
 
 int main() {
-    auto &storage = Database::getStroage(DB_PATH);
+    auto &storage = Database::getStroage(DEFAULT_DB_FILE);
     auto &storage1 = Database::getStroage();
 
     assert(&storage == &storage1);

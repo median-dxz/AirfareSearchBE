@@ -6,6 +6,7 @@ set(DIR_MODULE_DATABASE ${CMAKE_CURRENT_SOURCE_DIR}/database)
 set(DIR_MODULE_SEARCH_SERVICE ${CMAKE_CURRENT_SOURCE_DIR}/search-serivce)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_LINKER "lld")
 
 find_package(Threads REQUIRED)
@@ -27,6 +28,8 @@ set(database_sources
 set(service_sources
     ${DIR_MODULE_SEARCH_SERVICE}/service.cpp
     ${DIR_MODULE_SEARCH_SERVICE}/service.h
+    ${DIR_MODULE_SEARCH_SERVICE}/str_utils.cpp
+    ${DIR_MODULE_SEARCH_SERVICE}/str_utils.h
 )
 
 add_subdirectory(rpc)

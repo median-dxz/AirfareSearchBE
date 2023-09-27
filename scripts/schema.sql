@@ -8,8 +8,12 @@ CREATE TABLE IF NOT EXISTS flight (
     PRIMARY KEY (carrier, flightNo, departure, arrival, departureDatetime)
 );
 
+CREATE INDEX IF NOT EXISTS flight_departrue_datetime_index ON flight (
+    departureDatetime
+);
+
 CREATE INDEX IF NOT EXISTS flight_index ON flight (
-    carrier, flightNo, departure, arrival
+    departure, arrival
 );
 
 CREATE TABLE IF NOT EXISTS price (
@@ -50,5 +54,5 @@ CREATE TABLE IF NOT EXISTS seat (
 );
 
 CREATE INDEX IF NOT EXISTS seat_index ON seat (
-    carrier, flightNo, departure, arrival
+    departure, arrival
 );

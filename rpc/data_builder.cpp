@@ -1,47 +1,79 @@
 #include "data_builder.h"
 
-namespace AirfareSearch {
+using namespace AirfareSearch;
 
-    SearchService::Request DataBuilder::request(SearchRequest req_) {
-        SearchService::Request req;
-        req.people = req_.people();
-        req.maxResults = req_.maxresults();
-        for (const auto &i : req_.routes()) {
-            req.routes.emplace_back(this->getRoute(i));
-        }
+using AirfareSearch::SearchServiceImpl;
 
-        for (const auto &i : req_.agencies()) {
-            req.agencies.emplace_back(i);
-        }
-
-        return req;
+SearchServiceImpl::Request DataBuilder::request(SearchRequest req_) {
+    SearchServiceImpl::Request req;
+    req.people = req_.people();
+    req.maxResults = req_.maxresults();
+    for (const auto &i : req_.routes()) {
+        req.routes.emplace_back(getRoute(i));
     }
 
-    void DataBuilder::bindResponse(SearchResponse &res_, SearchService::Response res) {
-        for (const auto &i : res.data) {
-            auto data = res_.add_data();
-            data->set_price(i.price);
-            for (const auto &agency : i.agencies) {
-                data->add_agencies(agency);
-            }
-            for (const auto &flight : i.flights) {
-                auto flight_ = data->add_flights();
-                this->bindFlight(flight_, flight);
-            }
-        }
+    for (const auto &i : req_.agencies()) {
+        req.agencies.emplace_back(i);
     }
 
-    void DataBuilder::bindFlight(AirfareSearch::Flight *flight_, const SearchService::Flight &flight) {
-        flight_->set_carrier(flight.carrier);
-        flight_->set_flightno(flight.flightNo);
-        flight_->set_allocated_departure(this->city(flight.departure));
-        flight_->set_allocated_arrival(this->city(flight.arrival));
-        flight_->set_departuredatetime(flight.departureDatetime);
-        flight_->set_arrivaldatetime(flight.arrivalDatetime);
+    return req;
+}
 
-        for (auto c : flight.cabins) {
-            flight_->add_cabins(c);
+void DataBuilder::bindResponse(SearchResponse &res_, SearchServiceImpl::Response res) {
+    for (const auto &i : res.data) {
+        auto data = res_.add_data();
+        data->set_price(i.price);
+        for (const auto &agency : i.agencies) {
+            data->add_agencies(agency);
+        }
+        for (const auto &flight : i.flights) {
+            auto flight_ = data->add_flights();
+            bindFlight(flight_, flight);
         }
     }
+}
 
-} // namespace AirfareSearch
+void DataBuilder::bindFlight(AirfareSearch::Flight *flight_, const SearchServiceImpl::Flight &flight) {
+    flight_->set_carrier(flight.carrier);
+    flight_->set_flightno(flight.flightNo);
+    flight_->set_allocated_departure(city(flight.departure));
+    flight_->set_allocated_arrival(city(flight.arrival));
+    flight_->set_departuredatetime(flight.departureDatetime);
+    flight_->set_arrivaldatetime(flight.arrivalDatetime);
+
+    for (auto c : flight.cabins) {
+        flight_->add_cabins(c);
+    }
+}
+
+SearchServiceImpl::City AirfareSearch::DataBuilder::getCity(const AirfareSearch::City &_r) {
+    return SearchServiceImpl::City{_r.code(), _r.name()};
+}
+
+SearchServiceImpl::Route AirfareSearch::DataBuilder::getRoute(const AirfareSearch::SearchRoute &_r) {
+    return SearchServiceImpl::Route{_r.id(), getCity(_r.departure()), getCity(_r.arrival()), _r.departuredate()};
+}
+
+AirfareSearch::City *AirfareSearch::DataBuilder::city(const SearchServiceImpl::City &city) {
+    auto c = new AirfareSearch::City();
+    c->set_code(city.code);
+    c->set_name(city.name);
+    return c;
+}
+
+AirfareSearch::Cabin AirfareSearch::DataBuilder::cabin(const SearchServiceImpl::Cabin &cabin) {
+    switch (cabin) {
+    case SearchServiceImpl::Cabin::F:
+        return AirfareSearch::Cabin::F;
+        break;
+    case SearchServiceImpl::Cabin::Y:
+        return AirfareSearch::Cabin::Y;
+        break;
+    case SearchServiceImpl::Cabin::C:
+        return AirfareSearch::Cabin::C;
+        break;
+    default:
+        spdlog::error("Error Cabin Enum Type");
+        throw new std::bad_cast();
+    }
+}

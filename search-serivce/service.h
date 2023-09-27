@@ -10,7 +10,16 @@ using std::string;
 using std::vector;
 
 namespace AirfareSearch {
-    namespace SearchService {
+    class SearchServiceImpl final {
+      public:
+        // 单例模式
+        static SearchServiceImpl &getInstance() {
+            static SearchServiceImpl instance;
+            return instance;
+        }
+        SearchServiceImpl(const SearchServiceImpl &) = delete;
+        SearchServiceImpl &operator=(const SearchServiceImpl &) = delete;
+
         struct City {
             string name;
             string code;
@@ -51,8 +60,21 @@ namespace AirfareSearch {
         };
 
         using Cabin = Cabin;
-    } // namespace SearchService
 
-    SearchService::Response search(SearchService::Request req);
+        Response search(Request req);
+
+        void update() {
+            // not implmention
+        }
+
+      private:
+        SearchServiceImpl() {
+            auto &stroage = Database::getStroage();
+            this->rules = stroage.get_all<PriceRule>();
+            spdlog::info("[service]: load {} price rules.", this->rules.size());
+        }
+
+        vector<PriceRule> rules;
+    };
 
 } // namespace AirfareSearch
