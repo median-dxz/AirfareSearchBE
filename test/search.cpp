@@ -10,14 +10,21 @@
 #include <spdlog/spdlog.h>
 
 using namespace std;
-using namespace AirfareSearch;
 namespace fs = filesystem;
 
 const string DEFAULT_DB_FILE = fs::absolute(fs::path("/var") / "as_data" / "as.db");
 
+namespace ServiceInternal {
+    struct SeatPrice {
+        Database::Cabin type;
+    };
+} // namespace ServiceInternal
+
 int main() {
-    auto &storage = Database::getStroage(DEFAULT_DB_FILE);
+    auto &storage = Database::getStorage(DEFAULT_DB_FILE);
     auto &service = SearchServiceImpl::getInstance();
+
+    auto rules = storage.get_all<Database::PriceRule>();
 
     SearchServiceImpl::Request r;
 
@@ -38,6 +45,7 @@ int main() {
         auto departureDatetime = route.departureDate;
 
         using namespace chrono_literals;
+        using namespace Database;
 
         auto datetime = dateFromString(departureDatetime, "%Y%m%d");
         datetime += 24h;
@@ -75,7 +83,8 @@ int main() {
 
             if (vaildateDate(departureDatetime, arrivalDatetime, departureDateRange) &&
                 (seatC + seatY + seatF) >= r.people) {
-                 
+                // 确认此行程可用的航班
+                // 开始判断
             }
         }
     }

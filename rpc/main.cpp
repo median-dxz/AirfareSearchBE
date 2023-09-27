@@ -52,7 +52,7 @@ class ServerImpl final {
     void Run(uint16_t port, std::string db_file) {
         std::string server_address = absl::StrFormat("0.0.0.0:%d", port);
         // 初始化数据库
-        Database::getStroage(db_file);
+        Database::getStorage(db_file);
 
         ServerBuilder builder;
 
@@ -101,8 +101,6 @@ class ServerImpl final {
                 new CallData(service_, cq_);
                 spdlog::info("[main server]: handle a rpc call");
 
-                using AirfareSearch::SearchServiceImpl;
-                namespace DataBuilder = AirfareSearch::DataBuilder;
                 // The actual processing.
                 auto &ins = SearchServiceImpl::getInstance();
                 auto reponse = ins.search(DataBuilder::request(this->request_));

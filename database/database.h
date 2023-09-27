@@ -9,6 +9,7 @@
 using namespace sqlite_orm;
 
 static auto createStroage(std::string db_path) {
+    using namespace Database;
     auto flight_table =
         make_table("flight", make_column("carrier", &Flight::carrier), make_column("flightNo", &Flight::flightNo),
                    make_column("departureDatetime", &Flight::departureDatetime),
@@ -57,5 +58,5 @@ static auto createStroage(std::string db_path) {
 
 namespace Database {
     using Storage = decltype(createStroage(""));
-    Storage &getStroage(std::optional<std::string> path = std::nullopt);
+    Storage &getStorage(std::optional<std::string> path = std::nullopt);
 }; // namespace Database

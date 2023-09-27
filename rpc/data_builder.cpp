@@ -1,9 +1,5 @@
 #include "data_builder.h"
 
-using namespace AirfareSearch;
-
-using AirfareSearch::SearchServiceImpl;
-
 SearchServiceImpl::Request DataBuilder::request(SearchRequest req_) {
     SearchServiceImpl::Request req;
     req.people = req_.people();
@@ -61,15 +57,15 @@ AirfareSearch::City *AirfareSearch::DataBuilder::city(const SearchServiceImpl::C
     return c;
 }
 
-AirfareSearch::Cabin AirfareSearch::DataBuilder::cabin(const SearchServiceImpl::Cabin &cabin) {
+AirfareSearch::Cabin AirfareSearch::DataBuilder::cabin(const Database::Cabin &cabin) {
     switch (cabin) {
-    case SearchServiceImpl::Cabin::F:
+    case Database::Cabin::F:
         return AirfareSearch::Cabin::F;
         break;
-    case SearchServiceImpl::Cabin::Y:
+    case Database::Cabin::Y:
         return AirfareSearch::Cabin::Y;
         break;
-    case SearchServiceImpl::Cabin::C:
+    case Database::Cabin::C:
         return AirfareSearch::Cabin::C;
         break;
     default:

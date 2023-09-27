@@ -1,10 +1,9 @@
 #include "service.h"
 #include "str_utils.h"
 
-using AirfareSearch::SearchServiceImpl;
-
 SearchServiceImpl::Response SearchServiceImpl::search(SearchServiceImpl::Request req) {
-    Database::Storage stroage = Database::getStroage();
+    using Database::Cabin;
+    Database::Storage stroage = Database::getStorage();
 
     SearchServiceImpl::Response res;
     SearchServiceImpl::FlightResult fr1, fr2, fr3;

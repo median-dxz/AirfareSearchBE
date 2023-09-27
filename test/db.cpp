@@ -11,8 +11,8 @@ namespace fs = std::filesystem;
 const string DEFAULT_DB_FILE = fs::absolute(fs::path("/var") / "as_data" / "as.db");
 
 int main() {
-    auto &storage = Database::getStroage(DEFAULT_DB_FILE);
-    auto &storage1 = Database::getStroage();
+    auto &storage = Database::getStorage(DEFAULT_DB_FILE);
+    auto &storage1 = Database::getStorage();
 
     assert(&storage == &storage1);
 
