@@ -17,9 +17,10 @@ SearchServiceImpl::Request DataBuilder::request(SearchRequest req_) {
     return req;
 }
 
-void DataBuilder::bindResponse(SearchResponse &res_, SearchServiceImpl::Response res) {
+void DataBuilder::bindResponse(SearchResponse *res_, SearchServiceImpl::Response res) {
+    res_->clear_data();
     for (const auto &i : res.data) {
-        auto data = res_.add_data();
+        auto data = res_->add_data();
         data->set_price(i.price);
         for (const auto &agency : i.agencies) {
             data->add_agencies(agency);
@@ -51,7 +52,7 @@ void DataBuilder::bindFlight(AirfareSearch::Flight *flight_, const SearchService
 }
 
 SearchServiceImpl::City DataBuilder::getCity(const AirfareSearch::City &_r) {
-    return SearchServiceImpl::City{_r.code(), _r.name()};
+    return SearchServiceImpl::City{_r.name(), _r.code()};
 }
 
 SearchServiceImpl::Route DataBuilder::getRoute(const AirfareSearch::SearchRoute &_r) {

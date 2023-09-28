@@ -24,7 +24,9 @@ target_compile_definitions(test_search PRIVATE SQLITE_ORM_OPTIONAL_SUPPORTED=1)
 target_sources(test_search PRIVATE
     ${database_sources}
     ${service_sources}
+    ${utils_sources}
 )
+
 target_include_directories(test_search PRIVATE ${DIR_MODULE_DATABASE})
 target_include_directories(test_search PRIVATE ${DIR_MODULE_SEARCH_SERVICE})
 

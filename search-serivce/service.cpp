@@ -20,7 +20,7 @@ SearchServiceImpl::Response SearchServiceImpl::search(SearchServiceImpl::Request
     using namespace std;
     using namespace ServiceInternal;
 
-    Database::Storage storage = Database::getStorage();
+    Database::Storage &storage = Database::getStorage();
 
     unordered_map<RoutePriceIdentifier, RoutePrice, RoutePriceIdentifier> routePriceMap; // 查询单段路程
     vector<vector<SearchServiceImpl::Flight>> allFlights(request.routes.size(),
@@ -33,13 +33,12 @@ SearchServiceImpl::Response SearchServiceImpl::search(SearchServiceImpl::Request
         using Database::Price;
         using Database::Seat;
         auto &[id, departure, arrival, departureDate] = request.routes[cur_route];
-        auto departureDate_{departureDate}; // 无法在lambda内捕获解构赋值
 
         // 时间校验, 保证搜索到的航班是当天起飞的
-        auto validateDate = [&departureDate_](const string &departureDatetimeLiteral) {
+        auto validateDate = [departureDate = departureDate](const string &departureDatetimeLiteral) {
             auto departureDatetime = dateFromString(departureDatetimeLiteral, "%Y%m%d%H%M");
-            return departureDatetime >= dateFromString(departureDate_ + "0000", "%Y%m%d%H%M") &&
-                   departureDatetime <= dateFromString(departureDate_ + "0000", "%Y%m%d%H%M") + 24h;
+            return departureDatetime >= dateFromString(departureDate + "0000", "%Y%m%d%H%M") &&
+                   departureDatetime <= dateFromString(departureDate + "0000", "%Y%m%d%H%M") + 24h;
         };
 
         spdlog::info("lookup: {} -> {}", departure.code, arrival.code);
@@ -71,7 +70,6 @@ SearchServiceImpl::Response SearchServiceImpl::search(SearchServiceImpl::Request
         spdlog::debug("preprocess: load all flight info successfully");
 
         for (auto &[carrier, flightNo, departureDatetime, arrivalDatetime, seatC, seatF, seatY] : flights) {
-
             // 确认此行程可用的航班
             if (validateDate(departureDatetime) &&
                 (seatToInt(seatY) + seatToInt(seatC) + seatToInt(seatF)) >= passenger) {
@@ -223,6 +221,32 @@ SearchServiceImpl::Response SearchServiceImpl::search(SearchServiceImpl::Request
         request.maxResults > result_set.size() ? result_set.end() : result_set.begin() + request.maxResults);
 
     return response;
+
+    // using Database::Cabin;
+    // SearchServiceImpl::Response res;
+    // SearchServiceImpl::FlightResult fr1, fr2, fr3;
+
+    // fr1.agencies = vector<string>{"BJS001", "CAN001"};
+    // fr2.agencies = vector<string>{"BJS001"};
+    // fr3.agencies = vector<string>{"CAN002"};
+
+    // fr1.price = 3200;
+    // fr2.price = 4000;
+    // fr3.price = 5000;
+
+    // SearchServiceImpl::Flight f1, f2, f3;
+
+    // f1 = {"AA", "1232", "AAA", "AAA", "201405051340", "201405051340", {Cabin::C, Cabin::Y}};
+    // f2 = {"BB", "1232", "AAA", "AAA", "201405051340", "201405051340", {Cabin::C, Cabin::Y}};
+    // f3 = {"CC", "1232", "AAA", "AAA", "201405051340", "201405051340", {Cabin::C, Cabin::Y}};
+
+    // fr1.flights = vector<SearchServiceImpl::Flight>{f1, f2};
+    // fr2.flights = vector<SearchServiceImpl::Flight>{f1, f3};
+    // fr3.flights = vector<SearchServiceImpl::Flight>{f3, f2};
+
+    // res.data = vector<SearchServiceImpl::FlightResult>{fr1, fr2, fr3};
+
+    // return res;
 }
 
 int seatToInt(const string &s) {
