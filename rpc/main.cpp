@@ -103,9 +103,9 @@ class ServerImpl final {
 
                 // The actual processing.
                 auto &ins = SearchServiceImpl::getInstance();
-                auto reponse = ins.search(DataBuilder::request(this->request_));
+                auto response = ins.search(DataBuilder::request(this->request_));
 
-                DataBuilder::bindResponse(this->reply_, reponse);
+                DataBuilder::bindResponse(this->reply_, response);
                 spdlog::info("[main server]: finish handling");
                 // And we are done! Let the gRPC runtime know we've finished, using the
                 // memory address of this instance as the uniquely identifying tag for

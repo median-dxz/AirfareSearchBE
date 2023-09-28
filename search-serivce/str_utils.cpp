@@ -26,3 +26,13 @@ TimePoint dateFromString(const string &datetimeStr, const string &format) {
 }
 
 string dateToString(const TimePoint &datetime, const string &format) { return fmt::format(format, datetime); }
+
+std::vector<std::string> splitString(const std::string &str, char delimiter) {
+    std::vector<std::string> result;
+    std::istringstream iss(str);
+    std::string token;
+    while (std::getline(iss, token, delimiter)) {
+        result.push_back(token);
+    }
+    return result;
+}

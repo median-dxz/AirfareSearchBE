@@ -1,5 +1,7 @@
 #include "data_builder.h"
 
+using namespace AirfareSearch;
+
 SearchServiceImpl::Request DataBuilder::request(SearchRequest req_) {
     SearchServiceImpl::Request req;
     req.people = req_.people();
@@ -32,32 +34,31 @@ void DataBuilder::bindResponse(SearchResponse &res_, SearchServiceImpl::Response
 void DataBuilder::bindFlight(AirfareSearch::Flight *flight_, const SearchServiceImpl::Flight &flight) {
     flight_->set_carrier(flight.carrier);
     flight_->set_flightno(flight.flightNo);
-    flight_->set_allocated_departure(city(flight.departure));
-    flight_->set_allocated_arrival(city(flight.arrival));
+
+    auto departure = new AirfareSearch::City();
+    auto arrival = new AirfareSearch::City();
+    departure->set_code(flight.departure);
+    arrival->set_code(flight.arrival);
+
+    flight_->set_allocated_departure(departure);
+    flight_->set_allocated_arrival(arrival);
     flight_->set_departuredatetime(flight.departureDatetime);
     flight_->set_arrivaldatetime(flight.arrivalDatetime);
 
     for (auto c : flight.cabins) {
-        flight_->add_cabins(c);
+        flight_->add_cabins(cabin(c));
     }
 }
 
-SearchServiceImpl::City AirfareSearch::DataBuilder::getCity(const AirfareSearch::City &_r) {
+SearchServiceImpl::City DataBuilder::getCity(const AirfareSearch::City &_r) {
     return SearchServiceImpl::City{_r.code(), _r.name()};
 }
 
-SearchServiceImpl::Route AirfareSearch::DataBuilder::getRoute(const AirfareSearch::SearchRoute &_r) {
+SearchServiceImpl::Route DataBuilder::getRoute(const AirfareSearch::SearchRoute &_r) {
     return SearchServiceImpl::Route{_r.id(), getCity(_r.departure()), getCity(_r.arrival()), _r.departuredate()};
 }
 
-AirfareSearch::City *AirfareSearch::DataBuilder::city(const SearchServiceImpl::City &city) {
-    auto c = new AirfareSearch::City();
-    c->set_code(city.code);
-    c->set_name(city.name);
-    return c;
-}
-
-AirfareSearch::Cabin AirfareSearch::DataBuilder::cabin(const Database::Cabin &cabin) {
+AirfareSearch::Cabin DataBuilder::cabin(const Database::Cabin &cabin) {
     switch (cabin) {
     case Database::Cabin::F:
         return AirfareSearch::Cabin::F;

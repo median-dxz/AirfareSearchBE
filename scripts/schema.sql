@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS price (
 );
 
 CREATE INDEX IF NOT EXISTS price_index ON price (
-    carrier, departure, arrival
+    departure, arrival
 );
 
 CREATE TABLE IF NOT EXISTS price_rule (
@@ -38,6 +38,10 @@ CREATE TABLE IF NOT EXISTS price_rule (
     agencies TEXT,
     subcharge INT NOT NULL,
     CHECK(subcharge >= -1 AND subcharge <= 100)
+);
+
+CREATE INDEX IF NOT EXISTS price_rule_index ON price_rule (
+    carrier
 );
 
 CREATE TABLE IF NOT EXISTS seat (

@@ -1,1 +1,1 @@
-docker run -d -p 8080:80 --name myapp_container myapp:v1.0
+docker run -d -p 3368:4408 --name myapp_container myapp:v1.0

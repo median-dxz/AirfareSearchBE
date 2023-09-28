@@ -29,9 +29,9 @@ const HOT_CITIES = [
     "TNA",
     "FOC",
 ];
-const MAX_FLIGHT_NO = 1500;
-const MAX_FLIGHT_ROUTE = 90;
-const MAX_PRICE_RULE = 500;
+const MAX_FLIGHT_NO = 2000;
+const MAX_FLIGHT_ROUTE = 30;
+const MAX_PRICE_RULE = 800; // for signle (carrier, departure)
 
 // const CARRIERS = ["CA", "MU"];
 // const MAX_FLIGHT_NO = 20;
@@ -56,15 +56,15 @@ const nextSeat = () => {
 
 const nextCity = (/** @type {string | undefined} */ prev) => {
     let nxt;
-    if (getRand(0, 20) === 0) {
-        do {
-            nxt = cities[getRand(0, cities.length - 1)].code;
-        } while (nxt === prev);
-    } else {
-        do {
-            nxt = HOT_CITIES[getRand(0, HOT_CITIES.length - 1)];
-        } while (nxt === prev);
-    }
+    // if (getRand(0, 10) === 0) {
+    //     do {
+    //         nxt = cities[getRand(0, cities.length - 1)].code;
+    //     } while (nxt === prev);
+    // } else {
+    do {
+        nxt = HOT_CITIES[getRand(0, HOT_CITIES.length - 1)];
+    } while (nxt === prev);
+    // }
     return nxt;
 };
 
@@ -107,7 +107,8 @@ class Flight {
     next() {
         if (this.routes.length === 0) {
             const start = dayjs("2024-01-01 05:00:00").add(
-                getRand(0, 5),
+                // getRand(0, 2),
+                0,
                 "day"
             );
             const route = new Route();
@@ -125,7 +126,7 @@ class Flight {
             route.departure = last.arrival;
             route.arrival = nextCity(route.departure);
             route.departureDatetime = dayjs(last.arrivalDatetime)
-                .add(getRand(8, 24), "hour")
+                .add(getRand(2, 8), "hour")
                 .toDate();
             route.arrivalDatetime = dayjs(route.departureDatetime)
                 .add(getRand(60, 180), "minutes")
@@ -146,7 +147,7 @@ function generate() {
     console.time("generation");
     // 生成航班和配套余座
     for (const carrier of CARRIERS) {
-        for (let i = 1; i < getRand(20, MAX_FLIGHT_NO / 2); i++) {
+        for (let i = 1; i < getRand(100, MAX_FLIGHT_NO); i++) {
             const f = new Flight(carrier, i);
 
             for (let j = 1; j < MAX_FLIGHT_ROUTE; j++) {
@@ -192,12 +193,12 @@ function generate() {
                 VALUES ('${carrier}', '${departure}', '${arrival}', '${cabin}', ${amount});\n`;
 
         cabin = "C";
-        amount += getRand(800, 1000);
+        amount += getRand(200, 800);
         sql += `INSERT INTO price (carrier, departure, arrival, cabin, amount)
                 VALUES ('${carrier}', '${departure}', '${arrival}', '${cabin}', ${amount});\n`;
 
         cabin = "F";
-        amount += getRand(800, 1000);
+        amount += getRand(200, 800);
         sql += `INSERT INTO price (carrier, departure, arrival, cabin, amount)
                 VALUES ('${carrier}', '${departure}', '${arrival}', '${cabin}', ${amount});\n`;
     }
@@ -207,19 +208,31 @@ function generate() {
     const _nextCity = () => _cityUsed[getRand(0, _cityUsed.length - 1)];
 
     // 生成运价规则
-    const price_rules_limit = getRand(MAX_PRICE_RULE / 2, MAX_PRICE_RULE);
-    for (let sequenceNo = 1; sequenceNo <= price_rules_limit; sequenceNo++) {
-        const carrier = nextCarrier();
-        const departure = getRand(0, 2) ? "" : _nextCity();
-        const arrival = getRand(0, 2) ? "" : _nextCity();
-        const _nextCarrier = getRand(0, 2) ? "" : nextCarrier();
-        const agencies = getRand(0, 1)
-            ? ""
-            : Array(getRand(0, 10)).fill("").map(nextAgency);
-        const subcharge = getRand(0, 8) ? getRand(0, 100) : -1;
-        sql += `INSERT INTO price_rule (sequenceNo, carrier, departure, arrival, nextCarrier, agencies, subcharge)
-                VALUES (${sequenceNo}, '${carrier}', '${departure}', '${arrival}', '${_nextCarrier}', '${agencies}', ${subcharge});\n`;
+
+    let sequenceNo = 1;
+    for (const carrier of CARRIERS) {
+        const price_rules_limit = getRand(MAX_PRICE_RULE / 2, MAX_PRICE_RULE);
+        for (let i = 1; i <= price_rules_limit; i++) {
+            // const departure = getRand(0, 2) ? "" : _nextCity();
+            // const arrival = getRand(0, 2) ? "" : _nextCity();
+            const departure = "";
+            const arrival =
+                i >= (price_rules_limit / 10) * 9 ? "" : _nextCity();
+            const _nextCarrier =
+                i >= price_rules_limit / 3 && getRand(0, 6)
+                    ? ""
+                    : nextCarrier();
+            const agencies = getRand(0, 1)
+                ? ""
+                : [...new Set(Array(getRand(0, 10)).fill("").map(nextAgency))];
+            const subcharge = getRand(0, 8) ? getRand(0, 100) : -1;
+
+            sql += `INSERT INTO price_rule (sequenceNo, carrier, departure, arrival, nextCarrier, agencies, subcharge)
+            VALUES (${sequenceNo}, '${carrier}', '${departure}', '${arrival}', '${_nextCarrier}', '${agencies}', ${subcharge});\n`;
+            sequenceNo++;
+        }
     }
+
     console.timeLog("generation", "price rules generated");
 
     return sql;

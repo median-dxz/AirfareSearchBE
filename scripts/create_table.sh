@@ -19,5 +19,12 @@ cd $data_dir/ && \
 sqlite3 as.db < $create_table_sql
 
 echo "start import data"
+
+start_time=$(date +%s)
+
 cd $data_dir/ && \
 sqlite3 as.db < $import_data_sql
+
+end_time=$(date +%s)
+elapsed_time=$((end_time - start_time))
+echo "Elapsed time: $elapsed_time seconds"

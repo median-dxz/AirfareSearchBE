@@ -9,6 +9,45 @@
 using std::string;
 using std::vector;
 
+namespace ServiceInternal {
+    // 一种座位的价格相关信息
+    struct SeatPrice {
+        int remain = 0;
+        int amount = 0;
+        Database::Cabin type;
+    };
+
+    // 一段航程查询票价所需的相关信息
+    struct RoutePrice {
+        SeatPrice seatY;
+        SeatPrice seatF;
+        SeatPrice seatC;
+
+        RoutePrice() {
+            this->seatY.type = Database::Cabin::Y;
+            this->seatF.type = Database::Cabin::F;
+            this->seatC.type = Database::Cabin::C;
+        }
+
+        std::pair<int, vector<Database::Cabin>> countPrice(int people, double subcharge);
+    };
+
+    // 一段航程票价的Key
+    struct RoutePriceIdentifier {
+        string carrier;
+        string departure;
+        string arrival;
+
+        size_t operator()(const RoutePriceIdentifier &key) const {
+            return std::hash<string>()(key.carrier + key.departure + key.arrival);
+        }
+
+        bool operator==(const RoutePriceIdentifier &other) const {
+            return carrier == other.carrier && departure == other.departure && arrival == other.arrival;
+        }
+    };
+}; // namespace ServiceInternal
+
 class SearchServiceImpl final {
   public:
     // 单例模式
@@ -34,8 +73,8 @@ class SearchServiceImpl final {
     struct Flight {
         string carrier;
         string flightNo;
-        City departure;
-        City arrival;
+        string departure;
+        string arrival;
         string departureDatetime;
         string arrivalDatetime;
         vector<Database::Cabin> cabins;
@@ -58,18 +97,12 @@ class SearchServiceImpl final {
         vector<FlightResult> data;
     };
 
-    Response search(Request req);
+    Response search(Request request);
 
     void update() {
         // not implmention
     }
 
   private:
-    SearchServiceImpl() {
-        auto &storage = Database::getStorage();
-        this->rules = storage.get_all<Database::PriceRule>();
-        spdlog::info("[service]: load {} price rules.", this->rules.size());
-    }
-
-    vector<Database::PriceRule> rules;
+    SearchServiceImpl() { auto &storage = Database::getStorage(); }
 };
