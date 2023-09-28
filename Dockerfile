@@ -33,6 +33,7 @@ RUN sh ./scripts/create_table.sh
 
 RUN groupadd shs && useradd -m -g shs shs
 RUN chown --recursive shs:shs .
+RUN chown --recursive shs:shs /var/as_data
 USER shs
 
 ENTRYPOINT [ "/usr/local/airfare-search/main" ]

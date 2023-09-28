@@ -73,7 +73,7 @@ void RunServer(uint16_t port, string &&db_file) {
     builder.RegisterService(&service);
     // Finally assemble the server.
     std::unique_ptr<Server> server(builder.BuildAndStart());
-    std::cout << "Server listening on " << server_address << std::endl;
+    spdlog::info("Server listening on {}", server_address);
 
     // Wait for the server to shutdown. Note that some other thread must be
     // responsible for shutting down the server for this call to ever return.
@@ -83,8 +83,6 @@ void RunServer(uint16_t port, string &&db_file) {
 int main(int argc, char **argv) {
     absl::ParseCommandLine(argc, argv);
     FlightsSearchServiceImpl server;
-
-    spdlog::set_level(spdlog::level::err);
 
     RunServer(absl::GetFlag(FLAGS_port), absl::GetFlag(FLAGS_db_file));
 
