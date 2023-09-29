@@ -7,3 +7,6 @@ test
 
 # 请使用开发容器构建而不是直接使用docker构建
 # .m/build
+
+.vs
+.vscode
