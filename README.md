@@ -59,3 +59,16 @@ AirfareSearch Backend Components
 # 未实现
 
 数据更新器模块，同时搜索服务也没有对应的更新标志检查来标记此次搜索是否使用了脏数据
+
+# 开发容器
+
+开发容器中使用vcpkg进行包管理，请在ide中对cmake进行对应的配置（或直接配置cmake）
+
+例如对于`VSCode`，在`settings.json`中添加:
+
+```json
+    "cmake.configureSettings": {
+        "CMAKE_TOOLCHAIN_FILE": "/usr/local/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    }
+```
+
